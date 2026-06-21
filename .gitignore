@@ -1,0 +1,27 @@
+# --- C# / .NET Specific ---
+# Build output
+bin/
+obj/
+
+# Visual Studio files
+.vs/
+*.user
+*.suo
+
+# --- Environment & Secrets ---
+# Crucial for security - never push your appsettings.json if it contains secrets!
+# You should use appsettings.Development.json or user-secrets instead.
+appsettings.Local.json
+.env
+.env.local
+
+# --- Frontend / Node.js ---
+node_modules/
+dist/
+build/
+.output/
+
+# --- System & Logs ---
+.DS_Store
+*.log
+Logs/
