@@ -1,27 +1,73 @@
-# --- C# / .NET Specific ---
+# ───────────────────────────────────────────────
+# .NET / ASP.NET Core
+# ───────────────────────────────────────────────
+
 # Build output
 bin/
 obj/
 
-# Visual Studio files
+# Rider / VS / VSCode
 .vs/
+.vscode/
+.idea/
 *.user
 *.suo
+*.userosscache
+*.userprefs
 
-# --- Environment & Secrets ---
-# Crucial for security - never push your appsettings.json if it contains secrets!
-# You should use appsettings.Development.json or user-secrets instead.
+# NuGet
+*.nupkg
+.nuget/
+packages/
+project.lock.json
+project.assets.json
+
+# Publish output
+**/publish/
+**/PublishProfiles/
+
+# ⚠️ SECRETS — never commit real keys
+# Use appsettings.Development.json locally, or environment variables in CI/CD
+appsettings.Development.json
 appsettings.Local.json
-.env
-.env.local
+appsettings.*.json
+!appsettings.json            # keep the template (with placeholder keys) committed
 
-# --- Frontend / Node.js ---
+# Runtime / temp
+*.log
+*.tmp
+*.temp
+Thumbs.db
+
+# ───────────────────────────────────────────────
+# React / Node / Vite
+# ───────────────────────────────────────────────
+
 node_modules/
 dist/
-build/
-.output/
+dist-ssr/
+.cache/
+.parcel-cache/
 
-# --- System & Logs ---
+# Environment files — real API URLs / keys go here locally, not in git
+.env
+.env.local
+.env.*.local
+!.env.example             # keep the example template committed
+
+# Vite / build artefacts
+*.local
+
+# ───────────────────────────────────────────────
+# macOS / Windows / Linux
+# ───────────────────────────────────────────────
+
 .DS_Store
-*.log
-Logs/
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+/AICommunicationCoach_Backend/AICommunicationCoach.Api/Logs
