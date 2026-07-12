@@ -31,7 +31,7 @@ try
 {
     options.AddPolicy("AllowReactApp", policy =>
     {
-        policy.WithOrigins("https://ai-communication-coach-liard.vercel.app/", "http://localhost:5173") // Supports both CRA and Vite defaults
+        policy.WithOrigins("https://ai-communication-coach-liard.vercel.app", "http://localhost:5173") // Supports both CRA and Vite defaults
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials(); // Important for Server-Sent Events (SSE) streaming connections later
