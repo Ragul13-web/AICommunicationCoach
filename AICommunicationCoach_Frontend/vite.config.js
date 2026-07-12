@@ -4,11 +4,10 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   server: {
-    port: 5173,
+    allowedHosts: 'all',   // ← fixes the Vercel preview host error
     proxy: {
-      // Proxy API calls to the .NET backend during development
       '/api': {
-        target: 'https://localhost:7057',
+        target: process.env.VITE_API_BASE_URL || 'https://localhost:5001' || 'https://localhost:7057',
         changeOrigin: true,
         secure: false
       }
