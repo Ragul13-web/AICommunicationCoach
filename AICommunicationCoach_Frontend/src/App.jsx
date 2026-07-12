@@ -2,7 +2,7 @@ import { useState } from 'react'
 import ModeToggle from './components/ModeToggle'
 import InputPanel from './components/InputPanel'
 import ResultsPanel from './components/ResultsPanel'
-import ErrorToast from './components/ErrorToast'
+import ErrorToast from './components/Errortoast'
 import { analyzeText } from './api'
 
 export default function App() {
