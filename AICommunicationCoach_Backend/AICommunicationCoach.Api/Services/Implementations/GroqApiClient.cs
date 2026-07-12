@@ -21,7 +21,8 @@ namespace AICommunicationCoach.Api.Services.Implementations
             _logger = logger;
 
             _httpClient.BaseAddress = new Uri(_groqSettings.BaseUrl);
-            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _groqSettings.Apikey);
+            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Environment.GetEnvironmentVariable("GROQ_API_KEY")
+                       ?? _groqSettings.Apikey);
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
         public async Task<string> GetChatCompletionAsync(

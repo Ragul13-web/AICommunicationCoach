@@ -31,7 +31,7 @@ try
 {
     options.AddPolicy("AllowReactApp", policy =>
     {
-        policy.WithOrigins("http://localhost:3000", "http://localhost:5173") // Supports both CRA and Vite defaults
+        policy.WithOrigins("https://ai-communication-coach-liard.vercel.app/", "http://localhost:5173") // Supports both CRA and Vite defaults
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials(); // Important for Server-Sent Events (SSE) streaming connections later
@@ -69,7 +69,8 @@ app.UseCors("AllowReactApp");
 app.UseAuthorization();
 app.MapControllers();
 
-app.Run();
+var port = Environment.GetEnvironmentVariable("PORT") ?? "5001";
+app.Run($"http://0.0.0.0:{port}");
 }
 catch (Exception ex)
 {
