@@ -1,25 +1,42 @@
 import { useSpeechRecognition } from '../hooks/useSpeechRecognition';
+import { useState } from 'react';
 
 export default function InputPanel({ mode, text, onTextChange, onSubmit, loading }) {
   const { isRecording, start, stop, transcript, reset, isSupported } = useSpeechRecognition();
-
+  const [permissionError, setPermissionError] = useState(false);
   // Sync transcript to the text prop automatically when recording
   if (isRecording && transcript !== text) {
     onTextChange(transcript);
   }
 
-  const handleMicClick = () => {
+ const handleMicClick = async () => {
     if (isRecording) {
       stop();
     } else {
-      reset();
-      onTextChange('');
-      start();
+      try {
+        // Explicitly check for permission
+        await navigator.mediaDevices.getUserMedia({ audio: true });
+        setPermissionError(false);
+        reset();
+        onTextChange('');
+        start();
+      } catch (err) {
+        if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
+          setPermissionError(true);
+        }
+      }
     }
   };
 
   return (
     <div className="space-y-6 animate-in fade-in duration-300">
+      
+      {/* 🛑 Permission Error Banner */}
+      {permissionError && (
+        <div className="p-4 bg-red-50 text-red-600 rounded-xl text-xs font-bold border border-red-100">
+          Microphone access denied. Please allow microphone access in your browser site settings and refresh.
+        </div>
+      )}
       
       {/* 🎤 SPEECH MODE */}
       {mode === 'speech' && (
@@ -59,10 +76,10 @@ export default function InputPanel({ mode, text, onTextChange, onSubmit, loading
       {/* 🚀 SUBMIT BUTTON */}
       <button
         onClick={onSubmit}
-        disabled={loading || !text.trim()}
+        disabled={loading || !text.trim() || isRecording}
         className="w-full py-4 px-6 rounded-2xl bg-[#911bdf] hover:bg-[#7a16bd] text-white font-black tracking-wide shadow-lg shadow-purple-900/10 hover:shadow-xl hover:shadow-purple-900/20 active:scale-[0.99] disabled:opacity-50 disabled:pointer-events-none transition-all duration-200"
       >
-        {loading ? 'Processing Evaluation...' : 'Analyze & Get Feedback'}
+        {isRecording ? 'Recording in progress...' : (loading ? 'Processing Evaluation...' : 'Analyze & Get Feedback')}
       </button>
     </div>
   );
